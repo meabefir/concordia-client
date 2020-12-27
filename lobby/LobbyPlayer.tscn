@@ -1,0 +1,127 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/test_font.tres" type="DynamicFont" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+var changed = false
+
+var color = Color(1,1,1) setget set_color
+var player_name = \"NoName\" setget set_name
+
+func _on_NameChangeButton_pressed():
+	if changed and $NameField.text != \"\":
+		self.player_name = $NameField.text
+	else:
+		self.player_name = player_name
+	$NameChangeButton.queue_free()
+	$NameField.queue_free()
+	$ColorPickerButton.queue_free()
+	$PickColor.queue_free()
+
+func _on_NameField_focus_entered():
+	if changed == false:
+		changed = true
+		$NameField.text = \"\"
+
+func _ready():
+	set_color(Color(rand_range(0,1),rand_range(0,1),rand_range(0,1)))
+	pass
+
+func set_name(value):
+	player_name = value
+	
+	$Name.text = value
+	
+	var data = {
+		\"player_name\": player_name,
+		\"color\": color
+	}
+	Server.rpc_id(1,\"ServerUpdatePlayerData\",data)
+
+func set_color(value):
+	color = value
+	$ColorPickerButton.color = color
+	$Name.set(\"custom_colors/font_color\",color)
+	$PickColor.set(\"custom_colors/font_color\",color)
+	
+func _on_ColorPickerButton_color_changed(color):
+	set_color(color)
+	
+"
+
+[node name="LobbyPlayer" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -967.0
+rect_min_size = Vector2( 0, 100 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 46.8252
+margin_top = -28.0
+margin_right = 446.825
+margin_bottom = 28.0
+rect_min_size = Vector2( 400, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "NoName"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameField" type="TextEdit" parent="."]
+margin_left = 1005.95
+margin_top = 28.9636
+margin_right = 1760.95
+margin_bottom = 81.9636
+custom_fonts/font = ExtResource( 1 )
+text = "Enter name..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameChangeButton" type="Button" parent="."]
+anchor_right = 0.04
+margin_left = 1791.0
+margin_top = 26.0
+margin_right = 1807.2
+margin_bottom = 88.0
+rect_min_size = Vector2( 0, 50 )
+custom_fonts/font = ExtResource( 1 )
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+margin_left = 880.808
+margin_top = 17.0142
+margin_right = 975.808
+margin_bottom = 89.0142
+color = Color( 1, 1, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PickColor" type="Label" parent="."]
+anchor_bottom = 0.5
+margin_left = 537.0
+margin_top = 29.0
+margin_right = 863.0
+margin_bottom = 18.5
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "Pick a color --->"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="focus_entered" from="NameField" to="." method="_on_NameField_focus_entered"]
+[connection signal="pressed" from="NameChangeButton" to="." method="_on_NameChangeButton_pressed"]
+[connection signal="color_changed" from="ColorPickerButton" to="." method="_on_ColorPickerButton_color_changed"]

@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/test_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://lobby/LobbyPlayerTemplate.gd" type="Script" id=2]
+
+[node name="LobbyPlayerTemplate" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -956.0
+rect_min_size = Vector2( 0, 100 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 50.0
+margin_top = -23.0
+margin_right = 208.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 400, 0 )
+custom_fonts/font = ExtResource( 1 )
+text = "NoName"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

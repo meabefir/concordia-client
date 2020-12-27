@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://test/test.gd" type="Script" id=1]
+[ext_resource path="res://assets/test_font.tres" type="DynamicFont" id=2]
+
+[node name="Test" type="CanvasLayer"]
+
+[node name="Label" type="Label" parent="."]
+margin_right = 248.0
+margin_bottom = 88.0
+custom_fonts/font = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
