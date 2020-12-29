@@ -13,7 +13,17 @@ var packed_scenes = {
 	"Player": preload("res://game/Player.tscn"),
 	"PlayerTemplate": preload("res://game/PlayerTemplate.tscn"),
 	"TurnOver": preload("res://game/card_actions/TurnOver.tscn"),
-	"ArchitectAction": preload("res://game/card_actions/architect/ArchitectAction.tscn")
+	"CostTooltip": preload("res://game/card_actions/architect/CostTooltip.tscn"),
+	"BuyCard": preload("res://game/map_creation/BuyCard.tscn"),
+	"Card": preload("res://game/UI/Card.tscn"),
+	"ItemContainer": preload("res://game/UI/ItemContainer.tscn"),
+	"RegionToken": preload("res://game/map_creation/RegionToken.tscn"),
+	"CardPickAction": preload("res://game/card_actions/CardPick.tscn"),
+	"ArchitectAction": preload("res://game/card_actions/architect/ArchitectAction.tscn"),
+	"PrefectAction": preload("res://game/card_actions/prefect/PrefectAction.tscn"),
+	"ItemOverflow": preload("res://game/UI/ItemOverflow.tscn"),
+	"MercatorAction": preload("res://game/card_actions/mercator/MercatorAction.tscn"),
+	"ShopWindow": preload("res://game/UI/ShopWindow.tscn")
 }
 
 var textures = {
@@ -23,8 +33,48 @@ var textures = {
 	"WineItem": preload("res://assets/resource_items/res whine.png"),
 	"SilkItem": preload("res://assets/resource_items/res cloth.png"),
 	"LandColonistItem": preload("res://assets/pieces/land_colonist.png"),
-	"WaterColonistItem": preload("res://assets/pieces/water_colonist.png")
+	"WaterColonistItem": preload("res://assets/pieces/water_colonist.png"),
+	"BrickToken": preload("res://assets/region_tokens/region_token_brick.png"),
+	"FoodToken": preload("res://assets/region_tokens/region_token_food.png"),
+	"AnvilToken": preload("res://assets/region_tokens/region_token_anvil.png"),
+	"WineToken": preload("res://assets/region_tokens/region_token_wine.png"),
+	"SilkToken": preload("res://assets/region_tokens/region_token_silkl.png"),
+	"2money": preload("res://assets/money/2money.png"),
+	"1money": preload("res://assets/money/1money.png")
 }
+
+var card_textures = {
+	"ArcJup": preload("res://assets/starting cards/architect.png"),
+	"DipJup": preload("res://assets/starting cards/diplomat.png"),
+	"MerMer": preload("res://assets/starting cards/mercator.png"),
+	"PreSat": preload("res://assets/starting cards/prefect.png"),
+	"SenVes": preload("res://assets/starting cards/senator.png"),
+	"TriMar": preload("res://assets/starting cards/tribune.png"),
+	"ArcJupAnvil": preload("res://assets/buy cards/architect 1.png"),
+	"ColMarFood": preload("res://assets/buy cards/colonist 1.png"),
+	"ConJupSilk": preload("res://assets/buy cards/consul 2.png"),
+	"DipSatAnvil": preload("res://assets/buy cards/diplomat 1.png"),
+	"DipSatFood": preload("res://assets/buy cards/diplomat 3.png"),
+	"DipMerAnvil": preload("res://assets/buy cards/diplomat 4.png"),
+	"DipMarFood": preload("res://assets/buy cards/diplomat 5.png"),
+	"FarMinBrickFood": preload("res://assets/buy cards/farmer 1.png"),
+	"MasMinFood": preload("res://assets/buy cards/mason 1.png"),
+	"MerMerWine": preload("res://assets/buy cards/mercator 1.png"),
+	"PreSatWine": preload("res://assets/buy cards/prefect 1.png"),
+	"SmiMinBrickAnvil": preload("res://assets/buy cards/smith 1.png"),
+	"VinMinBrickWine": preload("res://assets/buy cards/vintner 2.png"),
+	"WeaMinBrickSilk": preload("res://assets/buy cards/weaver 2.png")
+}
+
+var starting_deck = ["ArcJup","DipJup","MerMer","MerMerWine","PreSat","PreSat","SenVes","TriMar","PreSat","PreSat","PreSat","PreSat","PreSat","PreSat","PreSat",]
+
+var buy_cards_data = [
+	["ArcJupAnvil","PreSatWine","MerMerWine","ColMarFood","DipSatAnvil","MasMinFood","FarMinBrickFood","SmiMinBrickAnvil"],
+	["ArcJupAnvil","PreSatWine","MerMerWine","ColMarFood","ConJupSilk","VinMinBrickWine","WeaMinBrickSilk"],
+	["ArcJupAnvil","PreSatWine","MerMerWine","ColMarFood","DipSatFood","ConJupSilk"],
+	["ArcJupAnvil","PreSatWine","ColMarFood","DipMerAnvil","ConJupSilk"],
+	["PreSatWine","MerMerWine","DipMarFood","ConJupSilk"]
+]
 
 var start_inventory = ["LandColonistItem","WaterColonistItem",
 						"FoodItem","FoodItem","BrickItem","AnvilItem","WineItem","SilkItem"]
@@ -37,12 +87,24 @@ var costs = {
 	"Silk": 7
 }
 
+var region_tokens_pos = [
+Vector2(653,97),Vector2(653,38),Vector2(787,38),Vector2(789,96),Vector2(921,36),Vector2(924,97),Vector2(924,155),Vector2(789,155),Vector2(653,153),Vector2(518,155),Vector2(521,96),Vector2(521,36),
+]
+
+var tokens_value = {
+	"Brick": 1,
+	"Food": 2,
+	"Anvil": 2,
+	"Wine": 1,
+	"Silk": 1
+}
+
 var house_costs = {
 	"Brick":{"money":1,"materials":["FoodItem"]},
-	"Food":{"money":2,"materials":["FoodItem","BrickItem"]},
+	"Food":{"money":2,"materials":["BrickItem","FoodItem"]},
 	"Anvil":{"money":3,"materials":["BrickItem","AnvilItem"]},
 	"Wine":{"money":4,"materials":["BrickItem","WineItem"]},
-	"Silk":{"money":5,"materials":["FoodItem"]},
+	"Silk":{"money":5,"materials":["BrickItem","SilkItem"]},
 }
 
 var city_cards = ["Brick","Brick","Brick","Brick","Brick","Brick","Brick","Brick",
@@ -54,10 +116,34 @@ var city_cards = ["Brick","Brick","Brick","Brick","Brick","Brick","Brick","Brick
 var node_types = [0,'d','d','d','a','a','a','a','a','d','d','c','c','c','c','c','c','c','c','c','c','b','b','b','b','b','b','b','b','a','a']
 
 var regions_data = [
-	[Vector2(1166,672),Vector2(1188,667),Vector2(1216,663),Vector2(1230,656),Vector2(1243,640),Vector2(1247,625),Vector2(1250,615),Vector2(1238,590),Vector2(1216,584),Vector2(1205,569),Vector2(1184,565),Vector2(1151,556),Vector2(1119,541),Vector2(1096,518),Vector2(1067,492),Vector2(1051,475),Vector2(1027,468),Vector2(1009,489),Vector2(981,509),Vector2(954,466),Vector2(962,433),Vector2(981,401),Vector2(1036,368),Vector2(1058,374),Vector2(1074,351),Vector2(1109,340),Vector2(1138,348),Vector2(1154,340),Vector2(1184,356),Vector2(1219,360),Vector2(1235,390),Vector2(1224,410),Vector2(1196,437),Vector2(1173,410),Vector2(1151,390),Vector2(1117,391),Vector2(1111,418),Vector2(1127,449),Vector2(1154,468),Vector2(1184,510),Vector2(1212,518),Vector2(1230,514),Vector2(1235,520),Vector2(1232,528),Vector2(1246,537),Vector2(1274,541),Vector2(1297,558),Vector2(1303,579),Vector2(1292,578),Vector2(1281,567),Vector2(1253,562),Vector2(1257,585),Vector2(1273,597),Vector2(1284,606),Vector2(1273,624),Vector2(1262,648),Vector2(1247,682),Vector2(1242,702),Vector2(1220,698),Vector2(1178,685),Vector2(1163,682),],
-	[Vector2(816,267),Vector2(830,258),Vector2(839,248),Vector2(853,243),Vector2(849,233),Vector2(855,224),Vector2(861,210),Vector2(865,190),Vector2(878,190),Vector2(881,204),Vector2(899,193),Vector2(1444,193),Vector2(1434,216),Vector2(1407,239),Vector2(1395,247),Vector2(1376,229),Vector2(1361,213),Vector2(1330,212),Vector2(1306,216),Vector2(1284,243),Vector2(1264,263),Vector2(1242,275),Vector2(1229,294),Vector2(1214,313),Vector2(1225,340),Vector2(1225,359),Vector2(1210,365),Vector2(1179,358),Vector2(1154,336),Vector2(1146,340),Vector2(1131,344),Vector2(1110,342),Vector2(1095,342),Vector2(1069,355),Vector2(1057,367),Vector2(1049,373),Vector2(1034,371),Vector2(1016,374),Vector2(1004,382),Vector2(987,394),Vector2(973,397),Vector2(954,394),Vector2(939,381),Vector2(938,351),Vector2(930,340),Vector2(922,316),Vector2(897,304),Vector2(876,285),Vector2(847,277),Vector2(816,267),],
-	[Vector2(1196,438),Vector2(1214,427),Vector2(1234,400),Vector2(1229,374),Vector2(1218,362),Vector2(1223,351),Vector2(1218,331),Vector2(1211,316),Vector2(1234,282),Vector2(1260,270),Vector2(1288,239),Vector2(1315,216),Vector2(1357,206),Vector2(1390,236),Vector2(1402,244),Vector2(1425,225),Vector2(1444,193),Vector2(1674,193),Vector2(1687,236),Vector2(1664,250),Vector2(1659,282),Vector2(1670,290),Vector2(1691,281),Vector2(1701,281),Vector2(1701,293),Vector2(1694,304),Vector2(1682,305),Vector2(1670,313),Vector2(1656,321),Vector2(1648,335),Vector2(1632,340),Vector2(1625,332),Vector2(1625,309),Vector2(1610,312),Vector2(1599,304),Vector2(1605,290),Vector2(1618,281),Vector2(1605,275),Vector2(1583,281),Vector2(1578,277),Vector2(1576,266),Vector2(1567,270),Vector2(1551,273),Vector2(1544,293),Vector2(1528,309),Vector2(1528,323),Vector2(1529,335),Vector2(1524,342),Vector2(1514,362),Vector2(1506,378),Vector2(1509,396),Vector2(1506,405),Vector2(1510,423),Vector2(1482,438),Vector2(1453,447),Vector2(1417,457),Vector2(1368,461),Vector2(1338,454),Vector2(1311,451),Vector2(1288,454),Vector2(1280,466),Vector2(1276,473),Vector2(1246,463),Vector2(1227,455),Vector2(1223,463),Vector2(1206,451),Vector2(1192,438),],
+	[Vector2(977,500),Vector2(972,477),Vector2(964,468),Vector2(972,442),Vector2(972,429),Vector2(987,406),Vector2(1000,396),Vector2(1016,392),Vector2(1026,379),Vector2(1060,381),Vector2(1077,364),Vector2(1099,353),Vector2(1127,353),Vector2(1146,356),Vector2(1160,353),Vector2(1169,364),Vector2(1195,372),Vector2(1214,372),Vector2(1219,392),Vector2(1191,423),Vector2(1165,400),Vector2(1142,392),Vector2(1114,400),Vector2(1123,454),Vector2(1160,470),Vector2(1179,509),Vector2(1214,523),Vector2(1234,519),Vector2(1233,534),Vector2(1253,541),Vector2(1302,566),Vector2(1302,584),Vector2(1273,565),Vector2(1257,571),Vector2(1257,588),Vector2(1279,611),Vector2(1267,624),Vector2(1257,645),Vector2(1244,699),Vector2(1164,684),Vector2(1164,666),Vector2(1225,653),Vector2(1248,616),Vector2(1233,584),Vector2(1169,549),Vector2(1108,519),Vector2(1064,475),Vector2(1023,466),Vector2(1003,489),Vector2(984,496),],
+	[Vector2(829,264),Vector2(858,243),Vector2(856,231),Vector2(870,195),Vector2(881,195),Vector2(885,199),Vector2(901,193),Vector2(1434,193),Vector2(1416,220),Vector2(1399,230),Vector2(1381,216),Vector2(1366,201),Vector2(1307,201),Vector2(1280,235),Vector2(1247,261),Vector2(1224,268),Vector2(1215,293),Vector2(1204,307),Vector2(1197,316),Vector2(1211,331),Vector2(1212,346),Vector2(1189,342),Vector2(1159,323),Vector2(1134,327),Vector2(1092,326),Vector2(1065,339),Vector2(1048,354),Vector2(1023,353),Vector2(1009,358),Vector2(998,372),Vector2(985,385),Vector2(966,387),Vector2(948,373),Vector2(948,354),Vector2(939,330),Vector2(929,310),Vector2(897,289),Vector2(879,272),Vector2(848,266),],
+	[Vector2(1212,441),Vector2(1247,403),Vector2(1243,382),Vector2(1232,363),Vector2(1238,341),Vector2(1223,317),Vector2(1242,286),Vector2(1262,280),Vector2(1274,267),Vector2(1289,253),Vector2(1312,234),Vector2(1347,220),Vector2(1374,249),Vector2(1407,259),Vector2(1435,234),Vector2(1453,194),Vector2(1656,194),Vector2(1671,231),Vector2(1648,264),Vector2(1664,291),Vector2(1687,286),Vector2(1694,302),Vector2(1669,305),Vector2(1638,341),Vector2(1622,314),Vector2(1591,313),Vector2(1618,276),Vector2(1573,277),Vector2(1579,267),Vector2(1546,275),Vector2(1526,308),Vector2(1533,330),Vector2(1514,349),Vector2(1506,381),Vector2(1496,414),Vector2(1446,436),Vector2(1400,449),Vector2(1361,445),Vector2(1330,437),Vector2(1288,441),Vector2(1273,464),Vector2(1220,442),],
+	[Vector2(1288,475),Vector2(1299,461),Vector2(1334,460),Vector2(1357,468),Vector2(1389,472),Vector2(1418,473),Vector2(1445,460),Vector2(1453,495),Vector2(1416,507),Vector2(1403,530),Vector2(1416,565),Vector2(1462,592),Vector2(1437,625),Vector2(1450,671),Vector2(1407,671),Vector2(1380,633),Vector2(1395,619),Vector2(1366,606),Vector2(1334,565),Vector2(1320,529),Vector2(1319,506),Vector2(1292,475),],
+	[Vector2(1468,450),Vector2(1506,436),Vector2(1529,461),Vector2(1582,465),Vector2(1620,465),Vector2(1668,424),Vector2(1721,413),Vector2(1737,423),Vector2(1774,431),Vector2(1800,413),Vector2(1817,417),Vector2(1850,390),Vector2(1848,363),Vector2(1820,340),Vector2(1783,327),Vector2(1721,293),Vector2(1721,279),Vector2(1735,252),Vector2(1724,233),Vector2(1747,210),Vector2(1697,231),Vector2(1685,193),Vector2(1896,193),Vector2(1898,497),Vector2(1858,515),Vector2(1794,528),Vector2(1751,555),Vector2(1739,585),Vector2(1740,604),Vector2(1721,616),Vector2(1706,619),Vector2(1678,603),Vector2(1648,612),Vector2(1616,639),Vector2(1599,622),Vector2(1582,622),Vector2(1564,616),Vector2(1547,603),Vector2(1544,588),Vector2(1518,585),Vector2(1518,576),Vector2(1533,558),Vector2(1524,543),Vector2(1506,547),Vector2(1503,528),Vector2(1526,516),Vector2(1563,496),Vector2(1532,489),Vector2(1509,505),Vector2(1475,497),Vector2(1467,463),],
+	[Vector2(1762,585),Vector2(1770,570),Vector2(1798,557),Vector2(1821,547),Vector2(1858,543),Vector2(1896,532),Vector2(1894,799),Vector2(1862,788),Vector2(1827,791),Vector2(1797,787),Vector2(1800,754),Vector2(1794,739),Vector2(1812,707),Vector2(1813,677),Vector2(1812,647),Vector2(1813,608),Vector2(1817,584),Vector2(1789,597),Vector2(1767,592),],
+	[Vector2(1560,860),Vector2(1590,841),Vector2(1624,847),Vector2(1645,849),Vector2(1671,820),Vector2(1698,809),Vector2(1717,806),Vector2(1729,818),Vector2(1775,809),Vector2(1804,817),Vector2(1840,818),Vector2(1896,826),Vector2(1898,939),Vector2(1863,935),Vector2(1848,914),Vector2(1821,910),Vector2(1813,921),Vector2(1752,860),Vector2(1744,870),Vector2(1797,928),Vector2(1789,941),Vector2(1556,939),Vector2(1563,916),Vector2(1560,893),Vector2(1559,868),],
+	[Vector2(1146,841),Vector2(1173,855),Vector2(1202,864),Vector2(1227,856),Vector2(1256,863),Vector2(1284,898),Vector2(1330,905),Vector2(1380,918),Vector2(1398,891),Vector2(1384,866),Vector2(1403,837),Vector2(1441,810),Vector2(1482,818),Vector2(1482,829),Vector2(1514,840),Vector2(1544,833),Vector2(1537,875),Vector2(1532,902),Vector2(1533,941),Vector2(1122,941),Vector2(1119,914),Vector2(1133,886),Vector2(1134,859),],
+	[Vector2(705,824),Vector2(739,837),Vector2(792,828),Vector2(815,810),Vector2(828,801),Vector2(842,803),Vector2(853,783),Vector2(889,771),Vector2(947,759),Vector2(980,757),Vector2(989,760),Vector2(1007,745),Vector2(1045,734),Vector2(1076,722),Vector2(1100,711),Vector2(1119,717),Vector2(1123,748),Vector2(1146,764),Vector2(1145,790),Vector2(1129,806),Vector2(1131,829),Vector2(1118,868),Vector2(1100,901),Vector2(1100,939),Vector2(604,941),Vector2(616,918),Vector2(644,895),Vector2(665,883),Vector2(686,837),],
+	[Vector2(598,544),Vector2(640,546),Vector2(667,538),Vector2(696,546),Vector2(738,537),Vector2(763,556),Vector2(796,564),Vector2(820,561),Vector2(849,564),Vector2(895,561),Vector2(897,580),Vector2(874,602),Vector2(855,610),Vector2(851,629),Vector2(830,656),Vector2(828,682),Vector2(835,705),Vector2(823,721),Vector2(820,740),Vector2(797,748),Vector2(788,772),Vector2(751,780),Vector2(727,783),Vector2(701,794),Vector2(674,799),Vector2(658,768),Vector2(636,768),Vector2(604,772),Vector2(604,744),Vector2(589,722),Vector2(592,680),Vector2(598,642),Vector2(589,611),Vector2(589,594),Vector2(575,571),Vector2(578,549),],
+	[Vector2(663,383),Vector2(700,362),Vector2(715,376),Vector2(750,364),Vector2(731,330),Vector2(742,323),Vector2(751,335),Vector2(784,335),Vector2(777,319),Vector2(805,304),Vector2(812,277),Vector2(830,287),Vector2(853,291),Vector2(870,295),Vector2(876,307),Vector2(892,319),Vector2(912,323),Vector2(920,339),Vector2(927,353),Vector2(926,369),Vector2(926,387),Vector2(939,399),Vector2(958,410),Vector2(947,429),Vector2(947,446),Vector2(941,464),Vector2(943,480),Vector2(958,498),Vector2(962,518),Vector2(931,518),Vector2(904,514),Vector2(892,518),Vector2(888,537),Vector2(855,538),Vector2(819,537),Vector2(774,529),Vector2(786,498),Vector2(766,468),Vector2(770,441),Vector2(747,437),Vector2(747,419),Vector2(731,408),Vector2(678,403),],
+	[Vector2(535,193),Vector2(757,193),Vector2(754,207),Vector2(777,201),Vector2(797,208),Vector2(797,226),Vector2(782,239),Vector2(800,253),Vector2(800,272),Vector2(780,285),Vector2(743,272),Vector2(739,289),Vector2(738,299),Vector2(720,293),Vector2(705,303),Vector2(692,295),Vector2(669,310),Vector2(654,327),Vector2(631,335),Vector2(636,312),Vector2(655,294),Vector2(690,275),Vector2(655,279),Vector2(650,271),Vector2(635,279),Vector2(628,267),Vector2(658,244),Vector2(635,224),Vector2(639,213),Vector2(654,217),Vector2(670,208),Vector2(665,198),Vector2(621,197),Vector2(621,229),Vector2(619,247),Vector2(604,247),Vector2(589,273),Vector2(548,302),Vector2(529,282),Vector2(536,258),Vector2(552,244),Vector2(535,229),Vector2(529,208),],
 
+]
+
+var region_nodes = [
+	[1,2,3],
+	[4,5],
+	[6,7,8],
+	[9,10],
+	[11,12,13],
+	[14,15],
+	[16,17,18],
+	[19,20],
+	[21,22],
+	[23,24,25],
+	[26,27,28],
+	[29,30]
 ]
 
 var nodes_coords = [Vector2(1143,538),

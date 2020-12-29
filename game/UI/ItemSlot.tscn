@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://game/UI/ItemSlot.gd" type="Script" id=1]
+
+[node name="ItemSlot" type="TextureRect"]
+margin_left = 24.0
+margin_top = 72.0
+margin_right = 64.0
+margin_bottom = 118.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="mouse_entered" from="." to="." method="_on_ItemSlot_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_ItemSlot_mouse_exited"]

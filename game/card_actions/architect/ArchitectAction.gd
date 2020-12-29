@@ -99,11 +99,13 @@ func picked_connection(connection):
 func build_picked(node):
 	var data
 	moves_left = 0
+	emit_signal("delete_pick_connection")
 	player.houses_on_nodes.append(node)
 	
 	#build house on that node 
 	player.get_node("Houses").get_children()[player.house_nr].global_position = node.global_position+node.child_offsets[node.child_count]
 	player.get_node("Houses").get_children()[player.house_nr].visible = true
+	player.get_node("Houses").get_children()[player.house_nr].node = node
 	node.child_count += 1
 	player.house_nr += 1
 	# update house built on all clients
@@ -117,11 +119,11 @@ func build_picked(node):
 	player.money -= GameData.house_costs[node.city_card.type]["money"]*node.cost_multiplier
 	for item in GameData.house_costs[node.city_card.type]["materials"]:
 		player.remove_item_from_inv(item)
-	data = {
-		"money": player.money,
-		"inventory": player.inventory
-	}
-	Server.rpc_id(1,"UpdateNodeById",player.my_id,data)
+#	data = {
+#		"money": player.money,
+#		"inventory": player.inventory
+#	}
+#	Server.rpc_id(1,"UpdateNodeById",player.my_id,data)
 	
 	# increase cost multiplier
 	node.cost_multiplier += 1 

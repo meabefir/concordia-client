@@ -1,8 +1,14 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
 
-[node name="LastCard" type="Control"]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[ext_resource path="res://game/UI/LastCard.gd" type="Script" id=1]
+
+[node name="LastCard" type="TextureRect"]
+anchor_right = 0.081
+anchor_bottom = 0.22
+margin_right = -0.520004
+margin_bottom = 0.399994
+rect_min_size = Vector2( 155, 238 )
+rect_pivot_offset = Vector2( 77, 119 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 1 )

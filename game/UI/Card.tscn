@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://game/UI/Card.gd" type="Script" id=1]
+
+[node name="Card" type="TextureRect"]
+anchor_right = 0.081
+anchor_bottom = 0.22
+margin_right = -0.520004
+margin_bottom = 0.399979
+rect_min_size = Vector2( 155, 238 )
+rect_pivot_offset = Vector2( 77, 119 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="mouse_entered" from="." to="." method="_on_Card_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Card_mouse_exited"]

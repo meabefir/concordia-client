@@ -9,6 +9,7 @@ onready var container = get_node("CanvasLayer/MainContainer/Container")
 onready var open_close_button = get_node("CanvasLayer/MainContainer/OpenClose")
 onready var inventory_node = get_node("CanvasLayer/MainContainer/Container/Inventory")
 
+var has_prefectus = false setget set_has_prefectus
 var start_inventory = GameData.start_inventory
 var my_id
 var player_name = ""
@@ -16,6 +17,18 @@ var color = Color(1,1,1)
 var my_turn = false
 var money = 0 setget set_money
 var inventory = [] setget set_inventory
+var last_card setget set_last_card
+
+func set_has_prefectus(value):
+	has_prefectus = value
+	
+	if has_prefectus:
+		get_node("CanvasLayer/MainContainer/Container/Prefectus").visible = true
+	else:
+		get_node("CanvasLayer/MainContainer/Container/Prefectus").visible = false
+
+func set_last_card(card_type):
+	get_node("CanvasLayer/MainContainer/Container/LastCard").card_type = card_type
 
 func set_my_turn(value):
 	my_turn = value
@@ -36,6 +49,8 @@ func _ready():
 	
 	add_colonist('land',0)
 	add_colonist('water',0)
+
+	#get_node("Houses").my_id = randi()
 
 	# create houses
 	for i in range(15):

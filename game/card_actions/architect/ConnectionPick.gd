@@ -8,6 +8,7 @@ var connections_to_highlight = []
 var bfs_visited = []
 
 func kill():
+	get_parent().unhighlight_existing_connections()
 	queue_free()
 
 func _ready():

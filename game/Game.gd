@@ -5,6 +5,10 @@ var nr_nodes = 31
 var nodes = []
 var connections = []
 var regions = []
+var buy_cards = []
+var region_nodes = GameData.region_nodes
+var starting_deck = GameData.starting_deck
+var buy_cards_data = GameData.buy_cards_data
 var nodes_coords = GameData.nodes_coords
 var city_cards = GameData.city_cards
 var regions_data = GameData.regions_data
@@ -12,10 +16,12 @@ var connections_data = GameData.connections
 var node_types = GameData.node_types
 var packed_scenes = GameData.packed_scenes
 var connection_paths = GameData.connection_paths
+var my_player
 
 var land_graph = []
 var water_graph = []
 
+var connected_template_players_nodes = []
 var connected_players = [] setget set_connected_players
 var connected_players_nodes = []
 var player_data = {} setget set_players_data
@@ -33,11 +39,6 @@ func set_turn(new_turn):
 	turn = new_turn
 	connected_players_nodes[turn].my_turn = true
 	
-#	data = {
-#		"my_turn": true
-#	}
-#	Server.rpc_id(1,"UpdateNodeById",connected_players_nodes[turn].my_id,data)
-
 func next_turn():
 	self.turn = (turn+1)%connected_players.size()
 
@@ -76,7 +77,6 @@ func _ready():
 		nodes.append(new_node)
 
 	# assign city card to nodes
-	
 	city_cards.shuffle()
 	for i in range(1,nodes.size()):
 		nodes[i].city_type = city_cards.pop_front()
@@ -85,6 +85,10 @@ func _ready():
 	for i in range(regions_data.size()):
 		var data = regions_data[i]
 		var new_region = packed_scenes["Region"].instance()
+		for node in region_nodes[i]:
+			new_region.nodes.append(nodes[node])
+		new_region.my_id = randi()
+		new_region.index = i
 		get_node("Regions").add_child(new_region)
 		new_region.create_collision(data)
 
@@ -122,6 +126,16 @@ func _ready():
 		new_connection.my_id = randi()
 		connections.append(new_connection)
 	
+	# create buy cards deck
+	for tier in buy_cards_data:
+		var temp = tier.duplicate()
+		temp.shuffle()
+		
+		for card in temp:
+			buy_cards.append(card)
+	
+	get_node("BuyCards").set_buy_cards(buy_cards)
+
 	
 func init_players():
 	# init players
@@ -131,9 +145,13 @@ func init_players():
 		var new_player
 		if self_id == id:
 			new_player = packed_scenes["Player"].instance()
+			my_player = new_player
+			for region in get_node("Regions").get_children():
+				region.player = my_player
 			#new_player.my_turn = true # !!!!!!!!!!!!!!!!!!!!!! temp
 		else:
 			new_player = packed_scenes["PlayerTemplate"].instance()
+			connected_template_players_nodes.append(new_player)
 			new_player.get_node("CanvasLayer/MainContainer").rect_position.y = template_players*328
 			template_players += 1
 		
@@ -151,3 +169,9 @@ func init_players():
 		# first player starts
 		if connected_players_nodes.size() == 1:
 			new_player.my_turn = true
+		if id == connected_players[-1]:
+			new_player.has_prefectus = true
+
+
+func _on_Regions_mouse_exited():
+	pass # Replace with function body.
