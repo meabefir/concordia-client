@@ -9,6 +9,9 @@ var type
 func set_pickable(value):
 	pickable = value
 
+	if !pickable:
+		rect_scale = Vector2(1,1)
+
 func _input(event):
 	if !mouse_over or !pickable:
 		return

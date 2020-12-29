@@ -1,5 +1,7 @@
 extends Node2D
 
+signal card_picked
+
 onready var collision = get_node("Area2D/CollisionShape2D")
 
 var index = null
@@ -44,5 +46,4 @@ func _on_Area2D_mouse_exited():
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
-		pass
-		# CLICK
+		emit_signal("card_picked",self)

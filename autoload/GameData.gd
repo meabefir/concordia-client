@@ -23,7 +23,10 @@ var packed_scenes = {
 	"PrefectAction": preload("res://game/card_actions/prefect/PrefectAction.tscn"),
 	"ItemOverflow": preload("res://game/UI/ItemOverflow.tscn"),
 	"MercatorAction": preload("res://game/card_actions/mercator/MercatorAction.tscn"),
-	"ShopWindow": preload("res://game/UI/ShopWindow.tscn")
+	"ShopWindow": preload("res://game/UI/ShopWindow.tscn"),
+	"SenatorAction": preload("res://game/card_actions/senator/SenatorAction.tscn"),
+	"BuyCardPickAction": preload("res://game/card_actions/senator/BuyCardPick.tscn"),
+	"PickAny": preload("res://game/card_actions/senator/PickAnyResource.tscn")
 }
 
 var textures = {
@@ -77,7 +80,7 @@ var buy_cards_data = [
 ]
 
 var start_inventory = ["LandColonistItem","WaterColonistItem",
-						"FoodItem","FoodItem","BrickItem","AnvilItem","WineItem","SilkItem"]
+						"FoodItem","FoodItem","BrickItem","AnvilItem","WineItem","SilkItem","WineItem","SilkItem"]
 
 var costs = {
 	"Brick": 3,

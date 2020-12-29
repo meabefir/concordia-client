@@ -12,6 +12,13 @@ onready var build_action_scene = preload("res://game/card_actions/architect/Buil
 var colonist_picked = null setget set_colonist
 var moves_left = 0
 
+func cleanup():
+	unhighlight_existing_connections()
+	if colonist_picked != null:
+		unhighlight_colonist(colonist_picked)
+	for i in range(1,game.nodes.size()):
+		game.nodes[i].city_card.pickable = false
+
 func _ready():
 	player.create_turn_over_button()
 	print("arhi action")

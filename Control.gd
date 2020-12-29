@@ -25,8 +25,8 @@ func _ready():
 		new_item_container.connect("item_picked",self,"item_picked")
 		get_node("HBoxContainer").add_child(new_item_container)
 		
-		get_node("Background").rect_min_size.y += 80
-		get_node("HBoxContainer").rect_min_size.y += 80
+		#get_node("Background").rect_min_size.y += 80
+		#get_node("HBoxContainer").rect_min_size.y += 80
 
 func item_picked(item):
 	game.my_player.add_to_inventory([item.type])

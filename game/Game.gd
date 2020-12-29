@@ -5,7 +5,7 @@ var nr_nodes = 31
 var nodes = []
 var connections = []
 var regions = []
-var buy_cards = []
+var buy_cards = [] setget set_buy_cards
 var region_nodes = GameData.region_nodes
 var starting_deck = GameData.starting_deck
 var buy_cards_data = GameData.buy_cards_data
@@ -17,6 +17,7 @@ var node_types = GameData.node_types
 var packed_scenes = GameData.packed_scenes
 var connection_paths = GameData.connection_paths
 var my_player
+var card_bought setget set_card_bought
 
 var land_graph = []
 var water_graph = []
@@ -27,6 +28,16 @@ var connected_players_nodes = []
 var player_data = {} setget set_players_data
 
 var turn = 0 setget set_turn
+
+func set_card_bought(value):
+	card_bought = value
+	
+	get_node("BuyCards").card_bought = card_bought
+
+func set_buy_cards(value):
+	buy_cards = value
+	
+	get_node("BuyCards").buy_cards = buy_cards
 
 func set_players_data(value):
 	player_data = value

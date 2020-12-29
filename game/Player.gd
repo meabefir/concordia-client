@@ -118,6 +118,8 @@ func play_card(card_type):
 			play_prefect()
 		"Mer":
 			play_mercator()
+		"Sen":
+			play_senator()
 
 func play_architect():
 	action_playing = GameData.packed_scenes["ArchitectAction"].instance()
@@ -129,6 +131,10 @@ func play_prefect():
 	
 func play_mercator():
 	action_playing = GameData.packed_scenes["MercatorAction"].instance()
+	add_child(action_playing)
+	
+func play_senator():
+	action_playing = GameData.packed_scenes["SenatorAction"].instance()
 	add_child(action_playing)
 	
 func play_turn():
@@ -144,6 +150,8 @@ func turn_over():
 	if "created_instances" in action_playing:
 		for instance in action_playing.created_instances:
 			instance.kill()
+	if action_playing.has_method("cleanup"):
+		action_playing.cleanup()
 	action_playing.queue_free()
 	if get_node("CanvasLayer").has_node("TurnOver"):
 		get_node("CanvasLayer/TurnOver").queue_free()
