@@ -6,4 +6,4 @@ func _on_JoinButton_pressed():
 
 func _ready():
 	randomize()
-	Server.ConnectToServer($AddressField.text)
+	#Server.ConnectToServer($AddressField.text)

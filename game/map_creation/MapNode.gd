@@ -16,7 +16,12 @@ var child_offset = 20
 var child_offsets = [Vector2(-child_offset,-child_offset),Vector2(child_offset,-child_offset),
 					 Vector2(-child_offset,child_offset),Vector2(child_offset,child_offset),
 					Vector2(0,-child_offset),Vector2(-child_offset,0),Vector2(child_offset,0),Vector2(0,child_offset),
-					Vector2(0,0)]
+					Vector2(0,0),
+					Vector2(-child_offset,-2*child_offset),Vector2(0,-2*child_offset),Vector2(child_offset,-2*child_offset),
+					Vector2(2*child_offset,-child_offset),Vector2(2*child_offset,0),Vector2(2*child_offset,child_offset),
+					Vector2(-child_offset,2*child_offset),Vector2(0,2*child_offset),Vector2(child_offset,2*child_offset),
+					Vector2(-2*child_offset,-child_offset),Vector2(-2*child_offset,0),Vector2(-2*child_offset,child_offset),
+					]
 var child_count = 0
 
 func _ready():

@@ -8,6 +8,7 @@ onready var money_label = get_node("CanvasLayer/MainContainer/Container/MoneyCon
 onready var container = get_node("CanvasLayer/MainContainer/Container")
 onready var open_close_button = get_node("CanvasLayer/MainContainer/OpenClose")
 onready var inventory_node = get_node("CanvasLayer/MainContainer/Container/Inventory")
+onready var last_card_node = get_node("CanvasLayer/MainContainer/Container/LastCard")
 
 var has_prefectus = false setget set_has_prefectus
 var start_inventory = GameData.start_inventory
@@ -17,7 +18,28 @@ var color = Color(1,1,1)
 var my_turn = false
 var money = 0 setget set_money
 var inventory = [] setget set_inventory
-var last_card setget set_last_card
+var last_card = null setget set_last_card
+var colonist setget set_colonist
+var house_nr = 0 setget set_house
+var score setget set_score
+
+func set_score(value):
+	score = value
+	var pos = get_node("CanvasLayer/MainContainer").rect_position
+		
+	var score_label = GameData.packed_scenes["ScoreLabel"].instance()
+	score_label.rect_position = pos
+	score_label.text = str(value)
+	get_node("CanvasLayer").add_child(score_label)
+
+func set_house(value):
+	house_nr = value
+	
+	get_node("CanvasLayer/MainContainer/Container/HouseCount/Label").text = str(house_nr)
+
+func set_colonist(arr):
+	
+		add_colonist(arr[0],arr[1])
 
 func set_has_prefectus(value):
 	has_prefectus = value
@@ -28,6 +50,8 @@ func set_has_prefectus(value):
 		get_node("CanvasLayer/MainContainer/Container/Prefectus").visible = false
 
 func set_last_card(card_type):
+	last_card = card_type
+	
 	get_node("CanvasLayer/MainContainer/Container/LastCard").card_type = card_type
 
 func set_my_turn(value):
@@ -44,6 +68,8 @@ func set_inventory(value):
 	inventory_node.update_inventory(inventory)
 	
 func _ready():
+	get_node("CanvasLayer/MainContainer/Container/HouseCount/TextureRect").modulate = color
+	self.house_nr = 0
 	player_name_label.text = player_name
 	player_name_label.set("custom_colors/font_color",color)
 	

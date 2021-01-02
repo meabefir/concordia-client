@@ -23,15 +23,13 @@ func cleanup():
 func _ready():
 	for card in game.get_node("BuyCards").get_children():
 		card.pickable = true
+	player.create_turn_over_button()
 	create_buy_card_pick_action()
 
 func create_buy_card_pick_action():
-	if cards_bought.size() >= 2:
+	if cards_bought.size() >= 1:
 		player.turn_over()
-		return
 	var new_buy_card_pick_action = GameData.packed_scenes["BuyCardPickAction"].instance()
-	if !player.has_node("CanvasLayer/TurnOver"):
-		player.create_turn_over_button()
 	add_child(new_buy_card_pick_action)
 	created_instances.append(new_buy_card_pick_action)
 
@@ -42,9 +40,8 @@ func card_picked(card):
 	
 	attempt_to_buy_card(card)
 	
-	if cards_bought.size() < 2:
-		if !has_node("PickAnyResource"):
-			create_buy_card_pick_action()
+	if cards_bought.size() < 1:
+		create_buy_card_pick_action()
 	else:
 		player.turn_over()
 
@@ -58,9 +55,7 @@ func attempt_to_buy_card(card):
 			inv_dic[name] = 1
 		
 	var has_all = true
-	for key in card.cost:
-		if key == "any":
-			continue
+	for key in card.default_cost:
 		if !key in inv_dic:
 			has_all = false
 			break
@@ -70,36 +65,23 @@ func attempt_to_buy_card(card):
 
 	if !has_all:
 		return
-	
-	if !"any" in card.cost:
-		if has_all:
-			pay_card_cost(card)
-			buy_card(card)
-	else:
-		var nr_items = 0
-		for item in player.inventory:
-			if !item in ["LandColonistItem","WaterColonistItem"]:
-				nr_items += 1
-		var nr_needed = 0
-		for key in card.cost:
-			if key != "any":
-				nr_needed += inv_dic[key]
-		
-		if nr_items <= nr_needed:
-			return
+	else:	
 		pay_card_cost(card)
-		pay_any_resource(card)
-
-func pay_any_resource(card):
-	player.delete_turn_over_button()
-	var pick_any = GameData.packed_scenes["PickAny"].instance()
-	pick_any.cost = card.cost
-	pick_any.card = card
-	add_child(pick_any)
-
-func any_picked(slot):
-	buy_card(slot)
-	create_buy_card_pick_action()
+		buy_card(card)
+#	else:
+#		var nr_items = 0
+#		for item in player.inventory:
+#			if !item in ["LandColonistItem","WaterColonistItem"]:
+#				nr_items += 1
+#		var nr_needed = 0
+#		for key in card.cost:
+#			if key != "any":
+#				nr_needed += inv_dic[key]
+#
+#		if nr_items <= nr_needed:
+#			return
+#		pay_card_cost(card)
+#		pay_any_resource(card)
 
 func buy_card(card):
 	cards_bought.append(card.index)
@@ -108,10 +90,11 @@ func buy_card(card):
 	deactivate_card(card)
 	
 func pay_card_cost(card):
-	for key in card.cost:
+#	print(card.default_cost)
+	for key in card.default_cost:
 		if key == "any":
 			continue
-		for i in range(card.cost[key]):
+		for i in range(card.default_cost[key]):
 			player.remove_item_from_inv(key+"Item")
 
 func deactivate_card(card):

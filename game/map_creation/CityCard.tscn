@@ -21,6 +21,11 @@ animations = [ {
 "name": "Wine",
 "speed": 0.0
 }, {
+"frames": [ ExtResource( 2 ) ],
+"loop": false,
+"name": "Anvil",
+"speed": 0.0
+}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": false,
 "name": "Food",
@@ -29,11 +34,6 @@ animations = [ {
 "frames": [ ExtResource( 3 ) ],
 "loop": false,
 "name": "Brick",
-"speed": 0.0
-}, {
-"frames": [ ExtResource( 2 ) ],
-"loop": false,
-"name": "Anvil",
 "speed": 0.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -53,6 +53,7 @@ frames = SubResource( 2 )
 animation = "Wine"
 
 [node name="Area2D" type="Area2D" parent="."]
+input_pickable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 polygon = PoolVector2Array( -72, 88, -72, -32, -64, -56, -40, -80, -24, -88, 0, -96, 24, -88, 40, -80, 64, -56, 72, -32, 72, 88 )

@@ -16,7 +16,9 @@ func update_inventory(inventory):
 		
 		if item_name in ["LandColonistItem","WaterColonistItem"]:
 			$Items.get_children()[i].modulate = get_node("../../../../").color
-			
+		else:
+			$Items.get_children()[i].modulate = Color(1,1,1)
+		
 	# clear textures that remain empty
 	for i in range(inventory.size(),12):
 		$Items.get_children()[i].texture = null

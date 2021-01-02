@@ -19,6 +19,8 @@ func _ready():
 		get_node("HBoxContainer").add_child(new_item_container)
 
 	for item_slot in game.my_player.get_node("CanvasLayer/MainContainer/Container/Inventory/Items").get_children():
+		if item_slot.type in ["LandColonist","WaterColonist"]:
+			continue
 		item_slot.pickable = true
 		item_slot.connect("slot_item_picked",self,"inv_item_picked")
 
@@ -33,7 +35,7 @@ func shop_item_picked(item):
 				attempt_buy(item.type)
 		
 func inv_item_picked(item):
-	if item.type in ["LandColonist","WaterColonist"]:
+	if item.type in ["LandColonist","WaterColonist",null]:
 		return
 	if dic.size() <= 2:
 		if item.type in dic:
@@ -41,8 +43,10 @@ func inv_item_picked(item):
 		elif !item.type in dic and dic.size() < 2:
 			dic[item.type] = 1
 			attempt_sell(item.type)
-		
+
 func attempt_buy(item_type):
+	if game.my_player.inventory.size() >= 12:
+		return
 	var item_cost = GameData.costs[item_type]
 	game.my_player.money -= item_cost
 	game.my_player.add_to_inventory([item_type])

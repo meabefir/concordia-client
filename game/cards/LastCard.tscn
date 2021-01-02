@@ -12,3 +12,6 @@ rect_pivot_offset = Vector2( 77, 119 )
 expand = true
 stretch_mode = 5
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

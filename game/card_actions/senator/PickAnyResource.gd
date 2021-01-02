@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 
 onready var game = get_node("/root/Game")
 onready var player = get_parent().player

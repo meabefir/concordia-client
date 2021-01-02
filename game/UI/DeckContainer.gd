@@ -23,13 +23,14 @@ func set_deck(value):
 	bring_cards_together()
 
 func push_cards_from(middle_card):
+		
 	var space_for_one = middle_card.rect_size.x
 
 	var total_space = rect_size.x
-	var left = []
+	var left = [] 
 	var right = []
 	var passed = false
-	
+
 	var pos = nodes_deck.find(middle_card)
 	var middle_card_start = pos*rect_size.x/deck.size()
 	for card in get_children():
@@ -40,14 +41,14 @@ func push_cards_from(middle_card):
 			left.append(card)
 		else:
 			right.append(card)
-	var left_space = middle_card_start-space_for_one/2
+	var left_space = middle_card_start
 	#var left_space = middle_card_start#-space_for_one/2
 	var right_space = rect_size.x - (left_space+space_for_one)
 	var space_for_one_left = left_space/max(left.size(),1)
 	var space_for_one_right = right_space/max(right.size(),1)
-	var start_right = left_space+space_for_one*1.5
+	var start_right = left_space+space_for_one
 	#var start_right = left_space+space_for_one
-	
+
 	for i in range(left.size()):
 		var card = left[i]
 		var future_pos = i*space_for_one_left

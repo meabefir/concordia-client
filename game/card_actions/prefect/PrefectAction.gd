@@ -3,6 +3,10 @@ extends Node2D
 onready var game = get_node("/root/Game")
 onready var player = get_parent()
 
+func cleanup():
+	for region in game.get_node("Regions").get_children():
+		region.pickable = false
+
 func _ready():
 	for region in game.get_node("Regions").get_children():
 		if region.active:
@@ -43,7 +47,7 @@ func region_picked(region):
 		var network_id = get_tree().get_network_unique_id()
 		var my_index = game.connected_players.find(network_id)
 		var next_index = (my_index+1)%game.connected_players.size()
-		print(next_index)
+#		print(next_index)
 		for i in range(game.connected_players_nodes.size()):
 			var connected_player = game.connected_players_nodes[i]
 			if i == next_index:

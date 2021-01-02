@@ -26,7 +26,17 @@ var packed_scenes = {
 	"ShopWindow": preload("res://game/UI/ShopWindow.tscn"),
 	"SenatorAction": preload("res://game/card_actions/senator/SenatorAction.tscn"),
 	"BuyCardPickAction": preload("res://game/card_actions/senator/BuyCardPick.tscn"),
-	"PickAny": preload("res://game/card_actions/senator/PickAnyResource.tscn")
+	"PickAny": preload("res://game/card_actions/senator/PickAnyResource.tscn"),
+	"ConsulAction": preload("res://game/card_actions/consul/ConsulAction.tscn"),
+	"ColonistAction": preload("res://game/card_actions/colonist/ColonistAction.tscn"),
+	"ColonistActionTypePick": preload("res://game/UI/ColonistActionTypePick.tscn"),
+	"ColonistTypePick": preload("res://game/UI/ColonistTypePick.tscn"),
+	"FarmerAction": preload("res://game/card_actions/farmer/FarmerAction.tscn"),
+	"DiplomatAction": preload("res://game/card_actions/diplomat/DiplomatAction.tscn"),
+	"TribuneAction": preload("res://game/card_actions/tribune/TribuneAction.tscn"),
+	"ColonistPick": preload("res://game/card_actions/tribune/ColonistPick.tscn"),
+	"YesNoTooltip": preload("res://game/UI/YesNo.tscn"),
+	"ScoreLabel": preload("res://game/UI/ScoreLabel.tscn")
 }
 
 var textures = {
@@ -69,7 +79,7 @@ var card_textures = {
 	"WeaMinBrickSilk": preload("res://assets/buy cards/weaver 2.png")
 }
 
-var starting_deck = ["ArcJup","DipJup","MerMer","MerMerWine","PreSat","PreSat","SenVes","TriMar","PreSat","PreSat","PreSat","PreSat","PreSat","PreSat","PreSat",]
+var starting_deck = ["ArcJup","DipJup","MerMer","PreSat","PreSat","SenVes","TriMar"]
 
 var buy_cards_data = [
 	["ArcJupAnvil","PreSatWine","MerMerWine","ColMarFood","DipSatAnvil","MasMinFood","FarMinBrickFood","SmiMinBrickAnvil"],
@@ -79,8 +89,51 @@ var buy_cards_data = [
 	["PreSatWine","MerMerWine","DipMarFood","ConJupSilk"]
 ]
 
+var god_multipliers = {
+	1: {
+		"Jup": 5,
+		"Sat": 5,
+		"Mer": 3,
+		"Mar": 3
+	},
+	2: {
+		"Jup": 5,
+		"Sat": 5,
+		"Mer": 3,
+		"Mar": 3
+	},
+	3: {
+		"Jup": 5,
+		"Sat": 5,
+		"Mer": 3,
+		"Mar": 3
+	},
+	4: {
+		"Jup": 7,
+		"Sat": 6,
+		"Mer": 4,
+		"Mar": 4
+	}
+}
+
+var minerva_bullshit = {
+	"Mas": 3,
+	"Far": 3,
+	"Smi": 3,
+	"Vin": 4,
+	"Wea": 5
+}
+
+var minerva_bullshit2 = {
+	"Mas": "Brick",
+	"Far": "Food",
+	"Smi": "Anvil",
+	"Vin": "Wine",
+	"Wea": "Silk"
+}
+
 var start_inventory = ["LandColonistItem","WaterColonistItem",
-						"FoodItem","FoodItem","BrickItem","AnvilItem","WineItem","SilkItem","WineItem","SilkItem"]
+						"FoodItem","FoodItem","BrickItem","AnvilItem","WineItem","SilkItem",]
 
 var costs = {
 	"Brick": 3,

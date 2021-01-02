@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://game/PlayerTemplate.gd" type="Script" id=1]
 [ext_resource path="res://assets/test_font.tres" type="DynamicFont" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://game/Inventory.tscn" type="PackedScene" id=7]
 [ext_resource path="res://game/map_creation/Houses.gd" type="Script" id=8]
 [ext_resource path="res://assets/pieces/prefectus_magnus.png" type="Texture" id=9]
+[ext_resource path="res://assets/pieces/haus.png" type="Texture" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 resource_local_to_scene = true
@@ -22,7 +23,7 @@ font_data = ExtResource( 4 )
 ]]
 script = ExtResource( 1 )
 
-[node name="Colonists" type="Node2D" parent="."]
+[node name="Colonists" type="YSort" parent="."]
 
 [node name="Houses" type="Node2D" parent="."]
 script = ExtResource( 8 )
@@ -53,10 +54,10 @@ __meta__ = {
 }
 
 [node name="PlayerName" type="Label" parent="CanvasLayer/MainContainer/Container"]
-margin_left = 224.0
-margin_top = 16.0
-margin_right = 384.0
-margin_bottom = 62.0
+margin_left = 112.0
+margin_top = 24.0
+margin_right = 272.0
+margin_bottom = 70.0
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 text = "preview"
@@ -71,10 +72,11 @@ margin_right = 48.0
 margin_bottom = 128.0
 
 [node name="MoneyContainer" type="Control" parent="CanvasLayer/MainContainer/Container"]
+margin_left = -16.0
 margin_top = 64.0
-margin_right = 40.0
+margin_right = 24.0
 margin_bottom = 104.0
-rect_scale = Vector2( 2, 2 )
+rect_scale = Vector2( 1.5, 1.5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -116,6 +118,28 @@ margin_bottom = 241.0
 rect_scale = Vector2( 0.34, 0.34 )
 texture = ExtResource( 9 )
 
+[node name="HouseCount" type="Control" parent="CanvasLayer/MainContainer/Container"]
+margin_left = 416.0
+margin_top = 24.0
+margin_right = 456.0
+margin_bottom = 64.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/MainContainer/Container/HouseCount"]
+margin_left = -40.0
+margin_bottom = 46.0
+custom_fonts/font = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MainContainer/Container/HouseCount"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 10 )
+
 [node name="OpenClose" type="Button" parent="CanvasLayer/MainContainer"]
 margin_left = 600.0
 margin_top = 136.0
@@ -126,4 +150,6 @@ text = "<<"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="mouse_entered" from="CanvasLayer/MainContainer/Container/LastCard" to="CanvasLayer/MainContainer/Container/LastCard" method="_on_LastCard_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/MainContainer/Container/LastCard" to="CanvasLayer/MainContainer/Container/LastCard" method="_on_LastCard_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/MainContainer/OpenClose" to="." method="_on_OpenClose_pressed"]

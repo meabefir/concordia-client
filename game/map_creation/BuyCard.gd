@@ -18,7 +18,7 @@ func _ready():
 		if resource in type:
 			cost[resource] = 1
 			
-	default_cost = cost
+	default_cost = cost.duplicate()
 			
 	if get_parent().extra_costs[index] != null:
 		for e_cost in get_parent().extra_costs[index]:

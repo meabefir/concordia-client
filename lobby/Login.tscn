@@ -23,7 +23,7 @@ margin_top = 307.255
 margin_right = 1390.11
 margin_bottom = 441.255
 custom_fonts/font = ExtResource( 1 )
-text = "192.168.1.106"
+text = "172.29.164.237"
 __meta__ = {
 "_edit_use_anchors_": false
 }

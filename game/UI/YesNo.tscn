@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/test_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/pieces/player_template_background.png" type="Texture" id=2]
+[ext_resource path="res://game/UI/YesNo.gd" type="Script" id=3]
+
+[node name="YesNo" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="BackGround" type="TextureRect" parent="."]
+margin_left = 610.955
+margin_top = 343.106
+margin_right = 1338.96
+margin_bottom = 657.106
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 2
+
+[node name="Yes" type="Button" parent="."]
+margin_left = 798.936
+margin_top = 563.323
+margin_right = 893.936
+margin_bottom = 615.323
+custom_fonts/font = ExtResource( 1 )
+text = "YES"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="No" type="Button" parent="."]
+margin_left = 1065.52
+margin_top = 564.83
+margin_right = 1147.52
+margin_bottom = 616.83
+custom_fonts/font = ExtResource( 1 )
+text = "NO"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 659.289
+margin_top = 386.644
+margin_right = 1287.29
+margin_bottom = 530.644
+custom_fonts/font = ExtResource( 1 )
+text = "Do you wish to add a colonist 
+from you inv to Rome
+for 1 food and 1 tool ?"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Yes" to="." method="_on_Yes_pressed"]
+[connection signal="pressed" from="No" to="." method="_on_No_pressed"]

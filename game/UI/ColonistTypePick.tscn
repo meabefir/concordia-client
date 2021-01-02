@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://game/UI/ColonistTypePick.gd" type="Script" id=1]
+[ext_resource path="res://assets/test_font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/pieces/player_template_background.png" type="Texture" id=3]
+[ext_resource path="res://assets/pieces/land_colonist.png" type="Texture" id=4]
+[ext_resource path="res://assets/pieces/water_colonist.png" type="Texture" id=5]
+
+[node name="ColonistTypePick" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 1928.0
+margin_bottom = 1080.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="Control"]
+margin_left = 664.0
+margin_top = 424.0
+margin_right = 1176.0
+margin_bottom = 736.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control"]
+margin_left = 728.0
+margin_top = 472.0
+margin_right = 1111.0
+margin_bottom = 567.0
+custom_fonts/font = ExtResource( 2 )
+text = "Pick Colonist Type
+"
+
+[node name="LandColonist" type="TextureButton" parent="Control/Label"]
+margin_left = 24.0
+margin_top = 88.0
+margin_right = 64.0
+margin_bottom = 148.0
+rect_scale = Vector2( 2, 2 )
+texture_normal = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WaterColonist" type="TextureButton" parent="Control/Label"]
+margin_left = 224.0
+margin_top = 104.0
+margin_right = 275.0
+margin_bottom = 144.0
+rect_scale = Vector2( 2, 2 )
+texture_normal = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="mouse_entered" from="Control/Label/LandColonist" to="." method="_on_LandColonist_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Label/LandColonist" to="." method="_on_LandColonist_mouse_exited"]
+[connection signal="pressed" from="Control/Label/LandColonist" to="." method="_on_LandColonist_pressed"]
+[connection signal="mouse_entered" from="Control/Label/WaterColonist" to="." method="_on_WaterColonist_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Label/WaterColonist" to="." method="_on_WaterColonist_mouse_exited"]
+[connection signal="pressed" from="Control/Label/WaterColonist" to="." method="_on_WaterColonist_pressed"]

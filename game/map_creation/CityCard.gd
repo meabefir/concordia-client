@@ -4,12 +4,13 @@ signal build_picked
 
 onready var game = get_node("/root/Game")
 onready var collision = get_node("Area2D/CollisionPolygon2D")
+var created_by = null
 
 var type = null setget set_type
 var pickable = false setget set_pickable
 
-func _ready():
-	self.pickable = false
+#func _ready():
+#	self.pickable = false
 		
 func set_pickable(value):
 	pickable = value
@@ -21,6 +22,9 @@ func set_pickable(value):
 	else:
 		collision.disabled = true
 		$AnimatedSprite.get("material").set_shader_param("width",0)
+		var player = game.my_player
+		if player.has_node("CanvasLayer/CostTooltip"):
+			player.get_node("CanvasLayer/CostTooltip").queue_free()
 
 func set_type(value):
 	type = value
@@ -29,7 +33,10 @@ func set_type(value):
 
 func _on_Area2D_mouse_entered():
 	scale = Vector2(.4,.4)
-
+	
+	if game.my_player.last_card.substr(0,3) == "Col":
+		return
+	
 	# create cost tooltip
 	var player = game.connected_players_nodes[game.turn]
 	var new_cost_tooltip = GameData.packed_scenes["CostTooltip"].instance()

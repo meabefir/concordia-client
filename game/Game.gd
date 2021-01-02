@@ -18,6 +18,7 @@ var packed_scenes = GameData.packed_scenes
 var connection_paths = GameData.connection_paths
 var my_player
 var card_bought setget set_card_bought
+var over = false setget set_game_over
 
 var land_graph = []
 var water_graph = []
@@ -28,6 +29,22 @@ var connected_players_nodes = []
 var player_data = {} setget set_players_data
 
 var turn = 0 setget set_turn
+
+func set_game_over(value):
+	over = value
+	my_player.game_over = true
+	
+	if over == true:
+		my_player.calc_score()
+
+func game_over():
+	print("OVER")
+	self.over = true
+	var data = {
+		"over": true
+	}
+	Server.rpc_id(1,"UpdateNodeById",my_id,data)
+	#my_player.turn_over(true)
 
 func set_card_bought(value):
 	card_bought = value
@@ -117,10 +134,12 @@ func _ready():
 		
 		if type == 1:
 			nodes[node1].connect_land(nodes[node2])
+			nodes[node2].connect_land(nodes[node1])
 			land_graph[node1][node2] = 1
 			land_graph[node2][node1] = 1
 		else:
 			nodes[node1].connect_water(nodes[node2])
+			nodes[node2].connect_water(nodes[node1])
 			water_graph[node1][node2] = 1
 			water_graph[node2][node1] = 1
 		
@@ -146,6 +165,10 @@ func _ready():
 			buy_cards.append(card)
 	
 	get_node("BuyCards").set_buy_cards(buy_cards)
+#	var temp = []
+#	for i in range(2):
+#		temp.append(buy_cards[i])
+#	get_node("BuyCards").set_buy_cards(temp)
 
 	
 func init_players():

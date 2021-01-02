@@ -19,6 +19,7 @@ func _input(event):
 		emit_signal("slot_item_picked",self)
 
 func _on_ItemSlot_mouse_entered():
+	#print(self.type)
 	if !pickable:
 		return
 	mouse_over = true

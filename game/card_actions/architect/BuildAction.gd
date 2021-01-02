@@ -42,11 +42,17 @@ func highlight_buildable_nodes():
 			continue
 		buildable_nodes.append(node)
 	
+	var nr = 0
 	for node in buildable_nodes:
 		if node in player.houses_on_nodes:
 			continue
+		nr += 1
 		node.city_card.pickable = true
 		node.city_card.connect("build_picked",self,"build_picked")
+#	if nr == 0 and get_parent().moves_left == 0:
+##		for i in range(1,game.nodes.size()):
+##			game.nodes[i].city_card.pickable = false
+#		player.turn_over()
 
 func build_picked(node):
 	get_parent().build_picked(node)

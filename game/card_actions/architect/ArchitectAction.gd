@@ -21,8 +21,8 @@ func cleanup():
 
 func _ready():
 	player.create_turn_over_button()
-	print("arhi action")
-	moves_left = player.colonists.get_child_count()*10
+#	print("arhi action")
+	moves_left = player.colonists.get_child_count()
 	create_colonist_pick()
 	create_build_action()
 		
@@ -41,7 +41,7 @@ func create_connection_pick():
 	add_child(temp_connection_pick)
 		
 func set_colonist(colonist):
-	print("Picked colonist"+str(colonist))
+#	print("Picked colonist"+str(colonist))
 	# reset last colonist if it exists
 	if colonist_picked != null:
 		unhighlight_colonist(colonist_picked)
@@ -101,7 +101,7 @@ func picked_connection(connection):
 	moves_left -= connection.cost
 	connection.cost = 0
 	
-	print("moves left"+str(moves_left))
+#	print("moves left"+str(moves_left))
 	
 func build_picked(node):
 	var data
@@ -115,13 +115,19 @@ func build_picked(node):
 	player.get_node("Houses").get_children()[player.house_nr].node = node
 	node.child_count += 1
 	player.house_nr += 1
+	if player.house_nr == 15:
+		game.game_over()
 	# update house built on all clients
 	data = {
 		"global_position": player.get_node("Houses").get_children()[player.house_nr-1].global_position,
 		"visible": true
 	}
 	Server.rpc_id(1,"UpdateNodeById",player.get_node("Houses").get_children()[player.house_nr-1].my_id,data)
-	
+	# update player houses_nr variable
+	data = {
+		"house_nr": player.house_nr
+	}
+	Server.rpc_id(1,"UpdateNodeById",player.my_id,data)
 	#remove materials and money from inventory hehehehe
 	player.money -= GameData.house_costs[node.city_card.type]["money"]*node.cost_multiplier
 	for item in GameData.house_costs[node.city_card.type]["materials"]:

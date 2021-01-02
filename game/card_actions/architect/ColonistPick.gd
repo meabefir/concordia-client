@@ -3,7 +3,7 @@ extends Node2D
 var owned_by = null
 
 func _ready():
-	print("picking colo")
+#	print("picking colo")
 	owned_by = get_node("../../")
 	
 	for colonist in owned_by.get_node("Colonists").get_children():

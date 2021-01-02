@@ -39,7 +39,7 @@ func _process(delta):
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT and !Helper.mouse_stopped:
-		print("picked connection "+ str(self))
+#		print("picked connection "+ str(self))
 		emit_signal("picked_connection",self)
 
 func mouse_enter():
