@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var game = get_node("/root/Game")
+
 var buy_cards = [] setget set_buy_cards
 var extra_costs = [null,["any"],["any"],["Silk"],["Silk"],["any","Silk"],["Silk","Silk"]]
 var card_bought setget set_card_bought
@@ -17,9 +19,6 @@ func set_buy_cards(value):
 	
 	for card in get_children():
 		card.queue_free()
-	
-	if buy_cards.size() == 0:
-		get_parent().game_over()
 	
 	for i in range(min(7,buy_cards.size())):
 		var buy_card = buy_cards[i]

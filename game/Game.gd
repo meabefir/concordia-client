@@ -32,10 +32,12 @@ var turn = 0 setget set_turn
 
 func set_game_over(value):
 	over = value
-	my_player.game_over = true
 	
 	if over == true:
 		my_player.calc_score()
+
+func last_turn():
+	my_player.game_over = true
 
 func game_over():
 	print("OVER")
@@ -163,10 +165,10 @@ func _ready():
 		
 		for card in temp:
 			buy_cards.append(card)
-	
+	 
 	get_node("BuyCards").set_buy_cards(buy_cards)
 #	var temp = []
-#	for i in range(2):
+#	for i in range(1):
 #		temp.append(buy_cards[i])
 #	get_node("BuyCards").set_buy_cards(temp)
 
@@ -186,7 +188,7 @@ func init_players():
 		else:
 			new_player = packed_scenes["PlayerTemplate"].instance()
 			connected_template_players_nodes.append(new_player)
-			new_player.get_node("CanvasLayer/MainContainer").rect_position.y = template_players*328
+			new_player.get_node("CanvasLayer/MainContainer").rect_position.y = template_players*328*.7
 			template_players += 1
 		
 		new_player.my_id = randi()

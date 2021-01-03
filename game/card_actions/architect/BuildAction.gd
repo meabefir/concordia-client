@@ -10,6 +10,11 @@ func kill():
 	queue_free()
 
 func _ready():
+	if player.house_nr == 15:
+		for i in range(1,game.nodes.size()):
+			game.nodes[i].city_card.pickable = false
+		queue_free()
+		return
 	get_parent().connect("delete_build_action",self,"kill")
 	
 	highlight_buildable_nodes()

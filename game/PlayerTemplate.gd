@@ -111,6 +111,6 @@ func _on_OpenClose_pressed():
 		open_close_button.text = ">>"
 		container.visible = false
 	else:
-		open_close_button.rect_position.x = 600
+		open_close_button.rect_position.x = 600*.7
 		open_close_button.text = "<<"
 		container.visible = true

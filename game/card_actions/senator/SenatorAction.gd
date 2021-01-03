@@ -13,7 +13,10 @@ func cleanup():
 		if i in cards_bought:
 			continue
 		new_buy_cards.append(old_buy_cards[i])
-	game.buy_cards = new_buy_cards
+	if new_buy_cards.size() != 0:
+		game.buy_cards = new_buy_cards
+	else:
+		game.last_turn()
 	
 	var data = {
 		"buy_cards": new_buy_cards

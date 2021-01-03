@@ -116,7 +116,10 @@ func build_picked(node):
 	node.child_count += 1
 	player.house_nr += 1
 	if player.house_nr == 15:
-		game.game_over()
+		game.last_turn()
+#		player.turn_over(true)
+#		game.last_turn()
+
 	# update house built on all clients
 	data = {
 		"global_position": player.get_node("Houses").get_children()[player.house_nr-1].global_position,

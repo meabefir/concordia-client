@@ -140,7 +140,7 @@ func calc_score():
 	print("minerva ",minerva_score)
 	set_score_once(score)
 
-	Server.rpc_id(1,"print",server_print)
+	Server.rpc_id(1,"sprint",server_print)
 
 func set_house(value):
 	house_nr = value
@@ -197,8 +197,16 @@ func picked_deck_card(card):
 func set_my_turn(value):
 	my_turn = value
 
+	if my_turn and game_over:
+		var data = {
+			"name": player_name
+		}
+		Server.rpc_id(1,"sprint",data)
+		game.game_over()
+		return
+
 	if my_turn:
-		play_turn()
+		play_turn()		
 
 func set_money(value):
 	money = value
@@ -310,20 +318,25 @@ func create_card_pick_action():
 	var new_card_pick_action = GameData.packed_scenes["CardPickAction"].instance()
 	add_child(new_card_pick_action)
 	
-func turn_over(game_over = false):
+func turn_over(last_turn = false):
 	your_turn.visible = false
-	if "created_instances" in action_playing:
-		for instance in action_playing.created_instances:
-			instance.kill()
-	if action_playing.has_method("cleanup"):
-		action_playing.cleanup()
-	action_playing.queue_free()
+	if action_playing != null:
+		if "created_instances" in action_playing:
+			for instance in action_playing.created_instances:
+				instance.kill()
+		if action_playing.has_method("cleanup"):
+			action_playing.cleanup()
+		action_playing.queue_free()
 	delete_turn_over_button()
 	
-	if !game_over:
-		game.next_turn()
-	else:
-		self.my_turn = false
+	if last_turn:
+		Server.rpc_id(1,"sprint","set last turn for player "+str(player_name))
+		game_over = true
+	game.next_turn()
+#	if !game_over:
+#		game.next_turn()
+#	else:
+#		game.game_over()
 	
 func _ready():
 	get_node("CanvasLayer/MainContainer/Container/HouseCount/TextureRect").modulate = color
