@@ -13,6 +13,7 @@ func update_inventory(inventory):
 		var item_name = inventory[i]
 		$Items.get_children()[i].texture = textures[item_name]
 		$Items.get_children()[i].type = item_name.substr(0,item_name.length()-4)
+		$Items.get_children()[i].pickable = false
 		
 		if item_name in ["LandColonistItem","WaterColonistItem"]:
 			$Items.get_children()[i].modulate = get_node("../../../../").color
@@ -23,6 +24,7 @@ func update_inventory(inventory):
 	for i in range(inventory.size(),12):
 		$Items.get_children()[i].texture = null
 		$Items.get_children()[i].type = null
+		$Items.get_children()[i].pickable = false
 
 func init_item_slots(inventory):
 	init = 1
@@ -31,6 +33,8 @@ func init_item_slots(inventory):
 		var row = int(i/6)
 		var col = i%6
 		new_item_slot.rect_position = Vector2(35+col*69,65+row*100)
-		if inventory.size() > i:
-			new_item_slot.type = inventory[i]
+#		if inventory.size() > i:
+#			new_item_slot.type = inventory[i]
+#		else:
+#			new_item_slot.type = null
 		get_node("Items").add_child(new_item_slot)

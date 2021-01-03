@@ -18,12 +18,21 @@ func _ready():
 		new_item_container.connect("item_picked",self,"shop_item_picked")
 		get_node("HBoxContainer").add_child(new_item_container)
 
-	for item_slot in game.my_player.get_node("CanvasLayer/MainContainer/Container/Inventory/Items").get_children():
-		if item_slot.type in ["LandColonist","WaterColonist"]:
-			continue
-		item_slot.pickable = true
-		item_slot.connect("slot_item_picked",self,"inv_item_picked")
+	make_inv_items_pickable()
 
+func make_inv_items_pickable():
+	for item_slot in game.my_player.get_node("CanvasLayer/MainContainer/Container/Inventory/Items").get_children():
+		item_slot.pickable = false
+		if item_slot.is_connected("slot_item_picked",self,"inv_item_picked"):
+			item_slot.disconnect("slot_item_picked",self,"inv_item_picked")
+		if item_slot.type in ["LandColonist","WaterColonist",null]:
+			continue
+
+		item_slot.pickable = true
+		item_slot.update()
+		if !item_slot.is_connected("slot_item_picked",self,"inv_item_picked"):
+			item_slot.connect("slot_item_picked",self,"inv_item_picked")
+		
 func shop_item_picked(item):
 	var item_cost = GameData.costs[item.type]
 	if item_cost <= game.my_player.money:
@@ -50,9 +59,11 @@ func attempt_buy(item_type):
 	var item_cost = GameData.costs[item_type]
 	game.my_player.money -= item_cost
 	game.my_player.add_to_inventory([item_type])
+	make_inv_items_pickable()
 		
 func attempt_sell(item_type):
 	if item_type == null:
 		return
 	game.my_player.money += GameData.costs[item_type]
 	game.my_player.remove_item_from_inv(item_type+"Item")
+	make_inv_items_pickable()
