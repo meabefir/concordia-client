@@ -5,7 +5,8 @@ onready var player = get_parent()
 var created_instances = []
 
 func _ready():
-	if player.last_card.length() > 6:
+	var last_card = player.copied if player.copied != null else player.last_card
+	if last_card.length() > 6:
 		player.money += 5
 	else:
 		player.money += 3

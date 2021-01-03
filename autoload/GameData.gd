@@ -79,7 +79,7 @@ var card_textures = {
 	"WeaMinBrickSilk": preload("res://assets/buy cards/weaver 2.png")
 }
 
-var starting_deck = ["ArcJup","DipJup","MerMer","PreSat","PreSat","SenVes","TriMar"]
+var starting_deck = ["ArcJup","DipJup","MerMer","PreSat","PreSat","SenVes","TriMar",]
 
 var buy_cards_data = [
 	["ArcJupAnvil","PreSatWine","MerMerWine","ColMarFood","DipSatAnvil","MasMinFood","FarMinBrickFood","SmiMinBrickAnvil"],

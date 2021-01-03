@@ -26,6 +26,7 @@ var house_nr = 0 setget set_house
 var colonists_added = []
 var score setget set_score
 var game_over = false
+var copied = null
 
 func set_score(value):
 	score = value

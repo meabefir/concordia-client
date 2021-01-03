@@ -59,7 +59,7 @@ func attempt_to_buy_card(card):
 		if !key in inv_dic:
 			has_all = false
 			break
-		if !(card.cost[key] <= inv_dic[key]):
+		if !(card.default_cost[key] <= inv_dic[key]):
 			has_all = false
 			break
 
@@ -68,20 +68,6 @@ func attempt_to_buy_card(card):
 	else:	
 		pay_card_cost(card)
 		buy_card(card)
-#	else:
-#		var nr_items = 0
-#		for item in player.inventory:
-#			if !item in ["LandColonistItem","WaterColonistItem"]:
-#				nr_items += 1
-#		var nr_needed = 0
-#		for key in card.cost:
-#			if key != "any":
-#				nr_needed += inv_dic[key]
-#
-#		if nr_items <= nr_needed:
-#			return
-#		pay_card_cost(card)
-#		pay_any_resource(card)
 
 func buy_card(card):
 	cards_bought.append(card.index)

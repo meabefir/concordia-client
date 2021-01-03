@@ -16,8 +16,10 @@ func _ready():
 		player.turn_over()
 	
 func last_card_picked(card):
+	player.copied = card
 	player.play_card((card.substr(0,3)))
 	
 	for player_template in game.connected_template_players_nodes:
 		player_template.last_card_node.pickable = false
 	queue_free()
+	player.copied = null
